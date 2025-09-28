@@ -1,0 +1,20 @@
+version: "3.8"
+services:
+  jenkins:
+    image: jenkins/jenkins:lts-jdk11
+    restart: unless-stopped
+    privileged: true
+    user: root
+    ports:
+      - "8080:8080"
+      - "50000:50000"
+    environment:
+      JAVA_OPTS: "-Djenkins.install.runSetupWizard=false"
+    volumes:
+      - jenkins_home:/var/jenkins_home
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /usr/bin/docker:/usr/bin/docker
+      - /usr/bin/qemu-system-arm:/usr/bin/qemu-system-arm   # бинарь qemu
+      - "/home/reror/Рабочий стол/Учеба/ТПО/BMC:/bmc"       # твоя папка с образом
+volumes:
+  jenkins_home:
